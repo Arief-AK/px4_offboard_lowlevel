@@ -1,4 +1,4 @@
-# Workflow to build the package using ROS2 and PX4
+# Workflow to build the package using ROS2 and PX4 within a Docker container
 name: Setup and build package
 on:
   push:
@@ -14,18 +14,20 @@ jobs:
             image: px4io/px4-dev-ros2-galactic:2021-09-08
             options: --privileged --ulimit core=-1 --security-opt seccomp=unconfined
         steps:
-        - uses: actions/checkout@v4
-
-        - name: Install gazebo
-          run: |
-            ls -l
-            apt update && apt install -y gazebo11 libgazebo11-dev gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly libgstreamer-plugins-base1.0-dev
-
-        - name: Clean the PX4 directory
-          run: |
-            make clean
-            make distclean
         
-        - name: Build PX4 with Gazebo
+        - name: Create a new workspace
           run: |
-            make px4_sitl gz_x500
+            cd ~
+            mkdir -p llc/llc_ws/src
+        
+        - name: Check out code repository
+          uses: actions/checkout@v4
+
+        - name: Clone px4_msgs repository
+          run: |
+            cd ~/llc/llc_ws/src
+            git clone https://github.com/PX4/px4_msgs.git
+
+        - name: Build package
+          run: |
+            colcon build -- symlink-install
