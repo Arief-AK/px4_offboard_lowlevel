@@ -30,4 +30,4 @@ jobs:
 
         - name: Build package
           run: |
-            colcon build -- symlink-install
+            colcon build --symlink-install
