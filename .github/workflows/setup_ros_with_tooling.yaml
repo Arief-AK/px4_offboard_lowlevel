@@ -21,30 +21,20 @@ jobs:
 
         - name: Check ROS2 command
           run: |
-            cd /
-            ls -l
-            cd opt/
-            ls -l
-            cd ros/
-            ls -l
-            cd humble/
-            ls -l
             . /opt/ros/humble/setup.sh
+            ros2 --help
             
-        #     source /opt/ros/humble/setup.bash
-        #     ros2 --help
+        - name: Create a new workspace
+          run: |
+            cd ~
+            mkdir -p llc/llc_ws/src
 
-        # - name: Create a new workspace
-        #   run: |
-        #     cd ~
-        #     mkdir -p llc/llc_ws/src
-
-        # - name: Setup PX4-Autopilot
-        #   run: |
-        #     cd ~/llc
-        #     git clone https://github.com/PX4/PX4-Autopilot.git
-        #     cd ~/llc/PX4-Autopilot
-        #     make px4_sitl_default
+        - name: Setup PX4-Autopilot
+          run: |
+            cd ~/llc
+            git clone https://github.com/PX4/PX4-Autopilot.git
+            cd ~/llc/PX4-Autopilot
+            make px4_sitl_default
 
         # - name: Head to src directory of workspace
         #   run: |
