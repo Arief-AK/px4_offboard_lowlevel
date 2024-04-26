@@ -10,18 +10,10 @@ env:
 jobs:
     build:
         runs-on: ubuntu-latest
-        strategy:
-          matrix:
-            distro: [rolling]
-        # container:
-        #     image: px4io/px4-dev-ros2-galactic:2021-09-08
-        #     options: --privileged --ulimit core=-1 --security-opt seccomp=unconfined
+        container:
+            image: px4io/px4-dev-ros2-galactic:2021-09-08
+            options: --privileged --ulimit core=-1 --security-opt seccomp=unconfined
         steps:
-
-        - name: Setup ROS environment
-          uses: ros-tooling/setup-ros@0.7.2
-          with:
-            required-ros-distributions: ${{matrix.distro}}
 
         - name: Check environment
           run: |
@@ -36,9 +28,9 @@ jobs:
         - name: Setup PX4-Autopilot
           run: |
             cd ~/llc
-            git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+            git clone https://github.com/PX4/PX4-Autopilot.git
             cd ~/llc/PX4-Autopilot
-            make px4_sitl
+            make px4_sitl_default
 
         - name: Head to src directory of workspace
           run: |
@@ -52,8 +44,12 @@ jobs:
             cd ~/llc/llc_ws/src
             git clone https://github.com/PX4/px4_msgs.git
 
+        - name: Check ROS2 command
+          run: |
+            ros2 --help
+
         - name: Build package
           run: |
-            source /opt/ros/${{matrix.distro}}/setup.bash
             cd ~/llc/llc_ws
+            source /opt/ros/galactic/setup.bash
             colcon build --symlink-install
