@@ -19,11 +19,6 @@ jobs:
           run: |
             export
             ulimit -a
-
-        - name: Check ROS2 command
-          run: |
-            . /opt/ros/galactic/setup.sh
-            ros2 --help
             
         - name: Create a new workspace
           run: |
@@ -36,17 +31,13 @@ jobs:
             git clone https://github.com/PX4/PX4-Autopilot.git
             cd ~/llc/PX4-Autopilot
             make px4_sitl_default
-
-        - name: Head to src directory of workspace
-          run: |
-            cd ~/llc/llc_ws/src
         
         - name: Clone the current repository
           run: |
             cd ~/llc/llc_ws/src
             git clone https://github.com/Arief-AK/px4_offboard_lowlevel.git
 
-        - name: Clone px4_msgs repository
+        - name: Clone the px4_msgs repository
           run: |
             cd ~/llc/llc_ws/src
             git clone https://github.com/PX4/px4_msgs.git
