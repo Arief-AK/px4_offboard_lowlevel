@@ -19,6 +19,22 @@ jobs:
           run: |
             cd ~
             mkdir -p llc/llc_ws/src
+
+        - name: Setup PX4-Autopilot
+          run: |
+            cd ~/llc
+            git clone https://github.com/PX4/PX4-Autopilot.git
+            cd ~/llc/PX4-Autopilot/Tools/setup
+            ./ubuntu.sh
+
+        - name: Build SITL
+          run: |
+            cd ~/llc/PX4-Autopilot
+            make px4_sitl_default gazebo-classic
+
+        - name: Head to src directory of workspace
+          run: |
+            cd ~/llc/llc_ws/src
         
         - name: Check out code repository
           uses: actions/checkout@v4
