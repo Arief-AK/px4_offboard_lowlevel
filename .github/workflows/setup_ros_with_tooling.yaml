@@ -20,6 +20,11 @@ jobs:
             export
             ulimit -a
 
+        - name: Check ROS distro
+          run: |
+            cd /opt/ros/galactic
+            ls -l
+
         - name: Create a new workspace
           run: |
             cd ~
