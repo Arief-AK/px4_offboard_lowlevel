@@ -22,6 +22,7 @@ jobs:
 
         - name: Check ROS2 command
           run: |
+            source /opt/ros/galactic/setup.sh
             ros2 --help
 
         - name: Create a new workspace
