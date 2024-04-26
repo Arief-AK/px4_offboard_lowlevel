@@ -15,43 +15,55 @@ jobs:
           options: --privileged --ulimit core=-1 --security-opt seccomp=unconfined
         steps:
 
-        - name: Check environment
-          run: |
-            export
-            ulimit -a
-
-        - name: Check ROS2 command
-          run: |
-            . /opt/ros/galactic/setup.sh
-            ros2 --help
-            
-        - name: Create a new workspace
-          run: |
-            cd ~
-            mkdir -p llc/llc_ws/src
-
-        - name: Setup PX4-Autopilot
-          run: |
-            cd ~/llc
-            git clone https://github.com/PX4/PX4-Autopilot.git
-            cd ~/llc/PX4-Autopilot
-            make px4_sitl_default
-
-        - name: Head to src directory of workspace
-          run: |
-            cd ~/llc/llc_ws/src
-        
         - name: Check out code repository
           uses: actions/checkout@v4
+          with:
+            path: '~/llc/llc_ws/src'
 
-        - name: Clone px4_msgs repository
+        - name: Check contents
           run: |
             cd ~/llc/llc_ws/src
-            git clone https://github.com/PX4/px4_msgs.git
             ls -l
 
-        - name: Build package
-          run: |
-            cd ~/llc/llc_ws
-            . /opt/ros/galactic/setup.sh
-            colcon build --symlink-install
+        # - name: Check environment
+        #   run: |
+        #     export
+        #     ulimit -a
+
+        # - name: Check ROS2 command
+        #   run: |
+        #     . /opt/ros/galactic/setup.sh
+        #     ros2 --help
+            
+        # - name: Create a new workspace
+        #   run: |
+        #     cd ~
+        #     mkdir -p llc/llc_ws/src
+
+        # - name: Setup PX4-Autopilot
+        #   run: |
+        #     cd ~/llc
+        #     git clone https://github.com/PX4/PX4-Autopilot.git
+        #     cd ~/llc/PX4-Autopilot
+        #     make px4_sitl_default
+
+        # - name: Head to src directory of workspace
+        #   run: |
+        #     cd ~/llc/llc_ws/src
+        
+        # - name: Check out code repository
+        #   uses: actions/checkout@v4
+        #   with:
+        #     path: '~/llc/llc_ws/src'
+
+        # - name: Clone px4_msgs repository
+        #   run: |
+        #     cd ~/llc/llc_ws/src
+        #     git clone https://github.com/PX4/px4_msgs.git
+        #     ls -l
+
+        # - name: Build package
+        #   run: |
+        #     cd ~/llc/llc_ws
+        #     . /opt/ros/galactic/setup.sh
+        #     colcon build --symlink-install
