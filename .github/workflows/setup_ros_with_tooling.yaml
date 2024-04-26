@@ -22,12 +22,11 @@ jobs:
 
         - name: Check out code repository
           uses: actions/checkout@v4
-          with:
-            path: '~/llc/llc_ws/src'
 
         - name: Check contents
           run: |
-            cd ~/llc/llc_ws/src
+            cd ${GITHUB_WORKSPACE}
+            cd ..
             ls -l
 
         # - name: Check environment
