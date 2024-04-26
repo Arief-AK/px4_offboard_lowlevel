@@ -30,4 +30,5 @@ jobs:
 
         - name: Build package
           run: |
+            cd ~/llc/llc_ws
             colcon build --symlink-install
