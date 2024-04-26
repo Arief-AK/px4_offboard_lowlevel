@@ -29,7 +29,7 @@ jobs:
             ls -l
             cd humble/
             ls -l
-            . setup.sh
+            . /opt/ros/humble/setup.sh
             
         #     source /opt/ros/humble/setup.bash
         #     ros2 --help
