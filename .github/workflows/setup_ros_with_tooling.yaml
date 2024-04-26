@@ -37,20 +37,20 @@ jobs:
             cd ~/llc/PX4-Autopilot
             make px4_sitl_default
 
-        # - name: Head to src directory of workspace
-        #   run: |
-        #     cd ~/llc/llc_ws/src
+        - name: Head to src directory of workspace
+          run: |
+            cd ~/llc/llc_ws/src
         
-        # - name: Check out code repository
-        #   uses: actions/checkout@v4
+        - name: Check out code repository
+          uses: actions/checkout@v4
 
-        # - name: Clone px4_msgs repository
-        #   run: |
-        #     cd ~/llc/llc_ws/src
-        #     git clone https://github.com/PX4/px4_msgs.git
+        - name: Clone px4_msgs repository
+          run: |
+            cd ~/llc/llc_ws/src
+            git clone https://github.com/PX4/px4_msgs.git
 
-        # - name: Build package
-        #   run: |
-        #     cd ~/llc/llc_ws
-        #     source /opt/ros/galactic/setup.bash
-        #     colcon build --symlink-install
+        - name: Build package
+          run: |
+            cd ~/llc/llc_ws
+            . /opt/ros/galactic/setup.sh
+            colcon build --symlink-install
