@@ -11,7 +11,8 @@ jobs:
     build:
         runs-on: ubuntu-latest
         container:
-            image: osrf/ros:humble-desktop
+          image: px4io/px4-dev-ros2-galactic:2021-09-08
+          options: --privileged --ulimit core=-1 --security-opt seccomp=unconfined
         steps:
 
         - name: Check environment
@@ -21,7 +22,7 @@ jobs:
 
         - name: Check ROS2 command
           run: |
-            . /opt/ros/humble/setup.sh
+            . /opt/ros/galactic/setup.sh
             ros2 --help
             
         - name: Create a new workspace
