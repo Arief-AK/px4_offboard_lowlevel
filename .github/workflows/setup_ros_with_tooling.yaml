@@ -10,20 +10,23 @@ env:
 jobs:
     build:
         runs-on: ubuntu-latest
-        container:
-            image: px4io/px4-dev-ros2-galactic:2021-09-08
-            options: --privileged --ulimit core=-1 --security-opt seccomp=unconfined
+        strategy:
+          matrix:
+            distro: [rolling]
+        # container:
+        #     image: px4io/px4-dev-ros2-galactic:2021-09-08
+        #     options: --privileged --ulimit core=-1 --security-opt seccomp=unconfined
         steps:
-        
+
+        - name: Setup ROS environment
+          uses: ros-tooling/setup-ros@0.7.2
+          with:
+            required-ros-distributions: ${{matrix.distro}}
+
         - name: Check environment
           run: |
             export
             ulimit -a
-
-        - name: Check ROS distro
-          run: |
-            cd /opt/ros/galactic
-            ls -l
 
         - name: Create a new workspace
           run: |
@@ -51,6 +54,6 @@ jobs:
 
         - name: Build package
           run: |
-            source /opt/ros/galactic/setup.bash
+            source /opt/ros/${{matrix.distro}}/setup.bash
             cd ~/llc/llc_ws
             colcon build --symlink-install
